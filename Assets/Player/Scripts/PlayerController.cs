@@ -3,7 +3,8 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
-    public Transform explosion;
+    public Transform bombPrefab;
+    public float throwStrength = 2f;
 
 	// Use this for initialization
 	void Start () {
@@ -14,7 +15,15 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            explosion.SendMessage("Play");
+            CreateAndThrowBomb();
         }
 	}
+
+    private void CreateAndThrowBomb()
+    {
+        Transform bomb = Instantiate<Transform>(bombPrefab);
+        bomb.GetComponent<Rigidbody>().velocity = gameObject.GetComponent<Rigidbody>().velocity + new Vector3(0, throwStrength, 0);
+        bomb.position = transform.position + new Vector3(0, transform.lossyScale.y / 2, 0);
+        bomb.SetParent(GameObject.FindGameObjectWithTag("Generated").transform);
+    }
 }

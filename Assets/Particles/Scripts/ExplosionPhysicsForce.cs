@@ -9,6 +9,21 @@ namespace UnityStandardAssets.Effects
     {
         public float explosionForce = 4;
 
+        void Start(){
+
+        }
+
+        // Message receiver from bomb
+        public void Play()
+        {
+            var systems = GetComponentsInChildren<ParticleSystem>();
+            foreach (ParticleSystem system in systems)
+            {
+                system.Play();
+            }
+
+            StartCoroutine(MimicExplode());
+        }
 
         private IEnumerator MimicExplode()
         {
@@ -34,16 +49,6 @@ namespace UnityStandardAssets.Effects
             }
         }
 
-        // Message receiver from player controller
-        private void Play()
-        {
-            var systems = GetComponentsInChildren<ParticleSystem>();
-            foreach (ParticleSystem system in systems)
-            {
-                system.Play();
-            }
 
-            StartCoroutine(MimicExplode());
-        }
     }
 }
