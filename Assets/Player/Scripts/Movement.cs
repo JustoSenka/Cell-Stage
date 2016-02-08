@@ -2,6 +2,7 @@
 using System.Collections;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(ConstantForce))]
 public class Movement : MonoBehaviour {
 
 	private Rigidbody rb;

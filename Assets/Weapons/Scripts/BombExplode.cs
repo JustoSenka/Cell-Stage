@@ -12,8 +12,8 @@ public class BombExplode : MonoBehaviour {
     {
         this.DoAfter(lifetime, () =>
         {
-            gameObject.GetComponentsInChildren<MeshRenderer>().DisableMeshes();
-            gameObject.GetComponentsInChildren<Collider>().DisableColliders();
+            gameObject.GetComponentsInChildren<MeshRenderer>().SetEnabled(false);
+            gameObject.GetComponentsInChildren<Collider>().SetEnabled(false);
             gameObject.SetActiveChildrenIfContaints("Scale", false);
 
             gameObject.BroadcastMessage("Play");

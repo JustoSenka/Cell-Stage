@@ -8,6 +8,8 @@ namespace UnityStandardAssets.Effects
     public class ExplosionPhysicsForce : MonoBehaviour
     {
         public float explosionForce = 4;
+        public float explosionDamage = 4;
+        public float range = 10;
 
         void Start(){
 
@@ -33,7 +35,7 @@ namespace UnityStandardAssets.Effects
 
             float multiplier = GetComponent<ParticleSystemMultiplier>().multiplier;
 
-            float r = 10*multiplier;
+            float r = range * multiplier;
             var cols = Physics.OverlapSphere(transform.position, r);
             var rigidbodies = new List<Rigidbody>();
             foreach (var col in cols)
@@ -46,9 +48,16 @@ namespace UnityStandardAssets.Effects
             foreach (var rb in rigidbodies)
             {
                 rb.AddExplosionForce(explosionForce*multiplier, transform.position, r, 1*multiplier, ForceMode.Impulse);
+                AlterHealth(rb.gameObject);
             }
         }
 
-
+        private void AlterHealth(GameObject go)
+        {
+            float multiplier = GetComponent<ParticleSystemMultiplier>().multiplier;
+            short damage = (short)((range * multiplier - Vector3.Distance(transform.position, go.transform.position)) * explosionDamage);
+            damage = (short) -damage;
+            go.SendMessage("CmdAlterHealth", damage, SendMessageOptions.DontRequireReceiver);
+        }
     }
 }

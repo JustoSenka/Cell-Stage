@@ -2,25 +2,26 @@
 using System;
 using System.Linq;
 using System.Collections;
+using UnityEngine.Networking;
 
 namespace CellStage
 {
     public static class Extention
     {
 
-        public static void DisableMeshes(this MeshRenderer[] array)
+        public static void SetEnabled(this MeshRenderer[] array, bool enabled)
         {
             foreach (var r in array)
             {
-                r.enabled = false;
+                r.enabled = enabled;
             }
         }
 
-        public static void DisableColliders<T>(this T[] array) where T : Collider
+        public static void SetEnabled<T>(this T[] array, bool enabled) where T : Collider
         {
             foreach (var r in array)
             {
-                r.enabled = false;
+                r.enabled = enabled;
             }
         }
 
@@ -42,7 +43,12 @@ namespace CellStage
             }
         }
 
-        public static void DoAfter<T>(this T mb, float time, Action action) where T : MonoBehaviour
+        public static void DoAfter(this MonoBehaviour mb, float time, Action action)
+        {
+            mb.StartCoroutine(DoAfterEnumerator(time, action));
+        }
+
+        public static void DoAfter(this NetworkBehaviour mb, float time, Action action)
         {
             mb.StartCoroutine(DoAfterEnumerator(time, action));
         }
