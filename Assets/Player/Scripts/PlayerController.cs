@@ -1,13 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.Networking;
 using CellStage;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(ConstantForce))]
-public class PlayerController : NetworkBehaviour {
+public class PlayerController : MonoBehaviour {
 
-    [SyncVar]
     public short health = 100;
     public Transform bombPrefab;
     public float throwStrength = 2f;
@@ -25,21 +23,14 @@ public class PlayerController : NetworkBehaviour {
         }
 	}
 
-    [Command]
     private void CmdCreateAndThrowBomb()
     {
         GameObject go = Instantiate<Transform>(bombPrefab.transform).gameObject;
         go.GetComponent<Rigidbody>().velocity = gameObject.GetComponent<Rigidbody>().velocity + new Vector3(0, throwStrength, 0);
         go.transform.position = transform.position + new Vector3(0, transform.lossyScale.y / 2, 0);
         go.transform.SetParent(GameObject.FindGameObjectWithTag("Generated").transform);
-
-        if (NetworkManager.singleton.numPlayers > 1)
-        {
-            NetworkServer.Spawn(go, go.GetComponent<NetworkIdentity>().assetId);
-        }
     }
 
-    [Command]
     public void CmdAlterHealth(short value)
     {
         health += value;
@@ -68,12 +59,8 @@ public class PlayerController : NetworkBehaviour {
 
     private void SetEnabledForGameObject(GameObject go, bool enabled)
     {
-        // Do not enable moveent and player controller for not local player, never.
-        if (isLocalPlayer && enabled)
-        {
-            go.GetComponent<Movement>().enabled = enabled;
-            go.GetComponent<PlayerController>().enabled = enabled;
-        }
+        go.GetComponent<Movement>().enabled = enabled;
+        go.GetComponent<PlayerController>().enabled = enabled;
         go.GetComponentsInChildren<MeshRenderer>().SetEnabled(enabled);
         go.GetComponentsInChildren<Collider>().SetEnabled(enabled);
     }
