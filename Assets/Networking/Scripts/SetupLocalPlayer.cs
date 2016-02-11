@@ -8,12 +8,14 @@ public class SetupLocalPlayer : NetworkBehaviour {
 	void Start () {
         if (isLocalPlayer)
         {
+            /*
             GetComponent<Movement>().enabled = true;
             GetComponent<PlayerController>().enabled = true;
             GetComponent<Transform>().position = GetStartPosition();
-
+            /*
             GameObject.FindObjectOfType<Camera>().GetComponent<FollowTarget>().target = GetComponent<Transform>();
             GameObject.FindObjectOfType<Camera>().GetComponent<LookatTarget>().SetTarget(GetComponent<Transform>());
+            */
         }
 	}
 

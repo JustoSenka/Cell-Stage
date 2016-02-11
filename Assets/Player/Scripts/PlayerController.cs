@@ -11,6 +11,7 @@ public class PlayerController : NetworkBehaviour {
     public short health = 100;
     public Transform bombPrefab;
     public float throwStrength = 2f;
+    public LocalPlayerController localPlayerController;
 
 	// Use this for initialization
 	void Start () {
@@ -68,12 +69,8 @@ public class PlayerController : NetworkBehaviour {
 
     private void SetEnabledForGameObject(GameObject go, bool enabled)
     {
-        // Do not enable moveent and player controller for not local player, never.
-        if (isLocalPlayer && enabled)
-        {
-            go.GetComponent<Movement>().enabled = enabled;
-            go.GetComponent<PlayerController>().enabled = enabled;
-        }
+        go.GetComponent<Movement>().enabled = enabled;
+        go.GetComponent<PlayerController>().enabled = enabled;
         go.GetComponentsInChildren<MeshRenderer>().SetEnabled(enabled);
         go.GetComponentsInChildren<Collider>().SetEnabled(enabled);
     }

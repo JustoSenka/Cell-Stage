@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(ConstantForce))]
-public class Movement : MonoBehaviour {
+public class Movement : NetworkBehaviour {
 
 	private Rigidbody rb;
     private ConstantForce cf;
@@ -23,8 +24,8 @@ public class Movement : MonoBehaviour {
 
 	void FixedUpdate ()
 	{
-		float h = Input.GetAxisRaw ("Horizontal");
-		float v = Input.GetAxisRaw ("Vertical");
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
 
         AddConstantHorizontalForce(h);
         AddJumpForce(v);
