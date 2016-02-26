@@ -5,20 +5,6 @@ namespace UnityStandardAssets.Cameras
 {
     public class LookatTarget : AbstractTargetFollower
     {
-        // A simple script to make one object look at another,
-        // but with optional constraints which operate relative to
-        // this gameobject's initial rotation.
-
-        // Only rotates around local X and Y.
-
-        // Works in local coordinates, so if this object is parented
-        // to another moving gameobject, its local constraints will
-        // operate correctly
-        // (Think: looking out the side window of a car, or a gun turret
-        // on a moving spaceship with a limited angular range)
-
-        // to have no constraints on an axis, set the rotationRange greater than 360.
-
         [SerializeField] private Vector2 m_RotationRange;
         [SerializeField] private float m_FollowSpeed = 1;
 

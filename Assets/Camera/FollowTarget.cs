@@ -22,6 +22,7 @@ public class FollowTarget : MonoBehaviour {
         {
             Vector3 targetPos = new Vector3(target.position.x, target.position.y + aboveTarget, cam.transform.position.z);
             cam.transform.position = Vector3.SmoothDamp(cam.transform.position, targetPos, ref velocity, lerpSpeed);
+            //cam.transform.position = Vector3.Lerp(cam.transform.position, targetPos, lerpSpeed);
         }
 	}
 }

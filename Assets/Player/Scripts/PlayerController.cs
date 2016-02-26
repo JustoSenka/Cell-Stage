@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour {
     {
         go.GetComponent<Movement>().enabled = enabled;
         go.GetComponent<PlayerController>().enabled = enabled;
+        go.GetComponent<Rigidbody>().useGravity = enabled;
         go.GetComponentsInChildren<MeshRenderer>().SetEnabled(enabled);
         go.GetComponentsInChildren<Collider>().SetEnabled(enabled);
     }
